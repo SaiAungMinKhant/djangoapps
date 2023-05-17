@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drum Kit</title>
+  <link href="{% static 'drumkit/styles.css' %} "rel="stylesheet" >
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="1" class="key">
+      <kbd>1</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="2" class="key">
+      <kbd>2</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="3" class="key">
+      <kbd>3</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="4" class="key">
+      <kbd>4</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="5" class="key">
+      <kbd>5</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="6" class="key">
+      <kbd>6</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="7" class="key">
+      <kbd>7</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="8" class="key">
+      <kbd>8</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="9" class="key">
+      <kbd>9</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="1" src="{% static 'drumkit/sounds/clap.wav' %}"></audio>
+  <audio data-key="2" src="{% static 'drumkit/sounds/hihat.wav' %}"></audio>
+  <audio data-key="3" src="{% static 'drumkit/sounds/kick.wav' %}"></audio>
+  <audio data-key="4" src="{% static 'drumkit/sounds/openhat.wav' %}"></audio>
+  <audio data-key="5" src="{% static 'drumkit/sounds/boom.wav' %}"></audio>
+  <audio data-key="6" src="{% static 'drumkit/sounds/ride.wav' %}"></audio>
+  <audio data-key="7" src="{% static 'drumkit/sounds/snare.wav' %}"></audio>
+  <audio data-key="8" src="{% static 'drumkit/sounds/tom.wav' %}"></audio>
+  <audio data-key="9" src="{% static 'drumkit/sounds/tink.wav' %}"></audio>
+
+<script>
+  
+  function PlaySound(e){
+    const audio = document.querySelector(`audio[data-key="${e.key}"]`)
+    const Key = document.querySelector(`.key[data-key="${e.key}"]`)
+    if(!audio) return;
+    audio.currentTime = 0;
+    audio.play();
+    Key.classList.add("playing")
+    
+    
+  }
+  function removeTransition(e){
+    if(e.propertyName !== 'transform') return;
+    this.classList.remove("playing")
+  }
+  
+  const keys = document.querySelectorAll('.key')
+  keys.forEach(key => key.addEventListener('transitionend',removeTransition))
+  
+  window.addEventListener('keydown',PlaySound)
+
+</script>
+
+
+</body>
+</html>
